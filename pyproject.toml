@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazyanalyst"
+version = "1.0.0"
+description = "Automated data analysis library with end-to-end analysis pipeline"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Tenali-Rama", email = "tenalirama.krishna125@gmail.com"}]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+]
+keywords = ["data-analysis", "automation", "pandas", "visualization", "statistics"]
+
+dependencies = [
+    "pandas>=1.0.0",
+    "numpy>=1.19.0",
+    "scipy>=1.5.0",
+    "matplotlib>=3.3.0",
+    "seaborn>=0.11.0",
+    "plotly>=5.0.0",
+    "dash>=2.0.0",
+    "openpyxl>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Tenali-Rama/lazyanalyst"
+Documentation = "https://github.com/Tenali-Rama/lazyanalyst#readme"
+Repository = "https://github.com/Tenali-Rama/lazyanalyst.git"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "black>=21.0",
+    "flake8>=3.9",
+    "mypy>=0.910",
+    "build>=0.7",
+    "twine>=3.4",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lazyanalyst*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
