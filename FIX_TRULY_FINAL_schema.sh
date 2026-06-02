@@ -1,3 +1,4 @@
+cat > lazyanalyst/schema.py << 'EOF'
 import pandas as pd
 import numpy as np
 
@@ -81,3 +82,4 @@ def detect(df):
     
     print(f"[LazyAnalyst] Schema detection complete: {len(schema)} columns classified")
     return schema
+EOF

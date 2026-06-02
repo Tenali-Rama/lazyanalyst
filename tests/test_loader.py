@@ -134,7 +134,7 @@ class TestLoaderErrors:
     
     def test_unsupported_file_type(self):
         """test ValueError for unsupported file type"""
-        with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("some text")
             f.flush()
             

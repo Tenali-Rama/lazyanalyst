@@ -19,7 +19,6 @@ def load(filepath):
             df = None
             for delim in [',', ';', '\t']:
                 try:
-                    # not sure why this works but it does
                     df = pd.read_csv(filepath, delimiter=delim, encoding='utf-8', encoding_errors='replace')
                     if df.shape[1] > 1:  # if more than one column, probably correct delimiter
                         break
@@ -36,8 +35,8 @@ def load(filepath):
             df = pd.read_excel(filepath)
             print(f"[LazyAnalyst] Loaded Excel: {filepath}")
         
-        # infer and set dtypes automatically
-        df = df.convert_dtypes()
+        # infer dtypes conservatively - keep object dtype for strings
+        df = df.infer_objects()
         
         # print shape
         print(f"[LazyAnalyst] Dataset shape: {df.shape[0]} rows, {df.shape[1]} columns")
@@ -46,4 +45,4 @@ def load(filepath):
     
     except Exception as e:
         print(f"[LazyAnalyst] Warning: loader failed — {e}. Skipping this step.")
-        return pd.DataFrame()  # return empty dataframe on failure
+        return pd.DataFrame()

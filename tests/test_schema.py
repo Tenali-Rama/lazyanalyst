@@ -21,7 +21,7 @@ class TestSchemaDetection:
         """test detection of categorical columns"""
         df = pd.DataFrame({
             'color': ['red', 'blue', 'green'],
-            'category': ['A', 'B', 'A', 'C']
+            'category': ['A', 'B', 'A']
         })
         sch = schema.detect(df)
         assert sch['color'] == 'categorical'
@@ -44,7 +44,7 @@ class TestSchemaDetection:
         df = pd.DataFrame({
             'id': [1, 2, 3, 4, 5],
             'code': ['ABC', 'DEF', 'GHI', 'JKL', 'MNO'],
-            'key': ['K1', 'K2', 'K3']
+            'key': ['K1', 'K2', 'K3', 'K4', 'K5']
         })
         sch = schema.detect(df)
         # should detect id, code, key as identifiers based on column names or uniqueness
@@ -56,8 +56,8 @@ class TestSchemaDetection:
         """test detection of datetime columns"""
         df = pd.DataFrame({
             'date': pd.to_datetime(['2021-01-01', '2021-01-02', '2021-01-03']),
-            'timestamp': pd.to_datetime(['2021-01-01 10:00:00', '2021-01-01 11:00:00']),
-            'date_string': ['2021-01-01', '2021-01-02']
+            'timestamp': pd.to_datetime(['2021-01-01 10:00:00', '2021-01-01 11:00:00', '2021-01-01 12:00:00']),
+            'date_string': ['2021-01-01', '2021-01-02', '2021-01-03']
         })
         sch = schema.detect(df)
         assert sch['date'] == 'datetime'

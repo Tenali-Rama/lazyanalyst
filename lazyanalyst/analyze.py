@@ -8,8 +8,8 @@ from . import visualizer
 from . import features
 from . import stats
 from . import insights
-from . import dashboard
-from . import reporter
+from . import dashboard as dashboard_module
+from . import reporter as reporter_module
 
 class LazyAnalystResult:
     """result object returned by analyze"""
@@ -34,7 +34,7 @@ class LazyAnalystResult:
         return self._cleaned_df
 
 
-def analyze(filepath, build_dashboard=True, build_report=True):
+def analyze(filepath, dashboard=True, report=True):
     """runs full analysis pipeline"""
     
     # make sure outputs folder exists
@@ -120,7 +120,6 @@ def analyze(filepath, build_dashboard=True, build_report=True):
         df_with_features, feat_list = features.engineer(cleaned_df, schema_dict)
         all_results["cleaned_df"] = df_with_features  # update df with new features
         all_results["features_created"] = feat_list
-        # update schema for new columns? not necessary for v1
     except Exception as e:
         print(f"[LazyAnalyst] Warning: feature engineering failed — {e}. Skipping this step.")
         all_results["features_created"] = []
@@ -147,9 +146,9 @@ def analyze(filepath, build_dashboard=True, build_report=True):
         print(f"[LazyAnalyst] Warning: insights generation failed — {e}. Skipping this step.")
         all_results["insights"] = []
     
-    # Module 10 - Dashboard - FIXED: use build_dashboard parameter
+    # Module 10 - Dashboard
     dashboard_path = None
-    if build_dashboard:
+    if dashboard:
         print("\n[LazyAnalyst] Step 10/11 — Building dashboard...")
         dashboard_input = {
             "cleaned_df": all_results["cleaned_df"],
@@ -161,16 +160,16 @@ def analyze(filepath, build_dashboard=True, build_report=True):
             "filename": all_results["filename"]
         }
         try:
-            dashboard.build(dashboard_input)
+            dashboard_module.build(dashboard_input)
             dashboard_path = "outputs/dashboard.html"
         except Exception as e:
             print(f"[LazyAnalyst] Warning: dashboard failed — {e}. Skipping this step.")
     else:
         print("\n[LazyAnalyst] Step 10/11 — Skipping dashboard (disabled)...")
     
-    # Module 11 - Reporter - FIXED: use build_report parameter
+    # Module 11 - Reporter
     report_path = None
-    if build_report:
+    if report:
         print("\n[LazyAnalyst] Step 11/11 — Generating HTML report...")
         report_input = {
             "cleaned_df": all_results["cleaned_df"],
@@ -184,7 +183,7 @@ def analyze(filepath, build_dashboard=True, build_report=True):
             "filename": all_results["filename"]
         }
         try:
-            reporter.build(report_input)
+            reporter_module.build(report_input)
             report_path = "outputs/report.html"
         except Exception as e:
             print(f"[LazyAnalyst] Warning: reporter failed — {e}. Skipping this step.")
