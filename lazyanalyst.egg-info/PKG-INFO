@@ -1,0 +1,252 @@
+Metadata-Version: 2.4
+Name: lazyanalyst
+Version: 1.0.0
+Summary: Automated data analysis library with end-to-end analysis pipeline
+Home-page: https://github.com/Tenali-Rama/lazyanalyst
+Author: Tenali-Rama
+Author-email: Tenali-Rama <tenalirama.krishna125@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/Tenali-Rama/lazyanalyst
+Project-URL: Documentation, https://github.com/Tenali-Rama/lazyanalyst#readme
+Project-URL: Repository, https://github.com/Tenali-Rama/lazyanalyst.git
+Keywords: data-analysis,automation,pandas,visualization,statistics
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pandas>=1.0.0
+Requires-Dist: numpy>=1.19.0
+Requires-Dist: scipy>=1.5.0
+Requires-Dist: matplotlib>=3.3.0
+Requires-Dist: seaborn>=0.11.0
+Requires-Dist: plotly>=5.0.0
+Requires-Dist: dash>=2.0.0
+Requires-Dist: openpyxl>=3.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.9; extra == "dev"
+Requires-Dist: mypy>=0.910; extra == "dev"
+Requires-Dist: build>=0.7; extra == "dev"
+Requires-Dist: twine>=3.4; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# LazyAnalyst
+
+**Automated data analysis for Python — one line of code, complete insights.**
+
+LazyAnalyst automates everything you'd manually do with Pandas and NumPy. Load a dataset, run one line of code, and get a complete analysis with insights, visualizations, statistical tests, and a professional HTML report.
+
+## Quick Start
+
+```python
+import lazyanalyst as la
+
+# Analyze any CSV or Excel file
+result = la.analyze("sales_data.csv")
+
+# Open the interactive dashboard
+result.dashboard()
+
+# Or view the professional report
+result.report()
+```
+
+That's it! LazyAnalyst handles data loading, quality auditing, cleaning, exploratory analysis, statistical testing, feature engineering, visualizations, and report generation — automatically.
+
+## Installation
+
+```bash
+pip install lazyanalyst
+```
+
+**Requirements:** Python 3.8+
+
+**Install from source:**
+```bash
+git clone https://github.com/Tenali-Rama/lazyanalyst.git
+cd lazyanalyst
+pip install -e .
+```
+
+## What You Get
+
+After running `analyze()`, LazyAnalyst creates an `outputs/` folder with:
+
+| File | Description |
+|------|-------------|
+| `dashboard.html` | Interactive Plotly dashboard |
+| `report.html` | Professional HTML report |
+| `cleaned_data.csv` | Your cleaned dataset |
+| `insights.txt` | Plain-English insights |
+| `plots/` | Generated charts (PNG) |
+
+## Features
+
+### Automated Pipeline (11 Modules)
+1. **Data Loading** — CSV/Excel with auto type inference
+2. **Schema Detection** — Classifies columns (numerical, categorical, datetime, boolean, identifier)
+3. **Quality Audit** — Detects missing values, duplicates, outliers
+4. **Data Cleaning** — Auto-fixes common issues
+5. **Exploratory Analysis** — Summary statistics and distributions
+6. **Visualizations** — Histograms, bar charts, heatmaps
+7. **Feature Engineering** — Ratios, interactions, transforms
+8. **Statistical Tests** — Pearson/Spearman, T-tests, ANOVA, Chi-Square
+9. **Insights** — Natural language findings
+10. **Dashboard** — Interactive HTML dashboard
+11. **Report** — Professional HTML report
+
+### Key Capabilities
+
+- **Smart Column Detection** — Automatically identifies data types
+- **Quality Scoring** — Rates your data quality (0-100)
+- **Resilient Processing** — Continues even if individual steps fail
+- **No Configuration** — Works out of the box
+- **Browser-Based Results** — No server needed
+
+## Example Usage
+
+### Basic Analysis
+```python
+import lazyanalyst as la
+
+result = la.analyze("data.csv")
+result.dashboard()  # Opens in browser
+result.report()     # Opens in browser
+```
+
+### With Options
+```python
+# Generate only the report (skip dashboard)
+result = la.analyze("data.xlsx", dashboard=False)
+
+# Access cleaned data
+cleaned_df = result.cleaned_data()
+print(cleaned_df.describe())
+```
+
+### Batch Processing
+```python
+import lazyanalyst as la
+import os
+
+for filename in os.listdir("data/"):
+    if filename.endswith(".csv"):
+        result = la.analyze(f"data/{filename}")
+        print(f"✓ Analyzed {filename}")
+```
+
+## Supported Data
+
+| Format | Extensions | Notes |
+|--------|-----------|-------|
+| CSV | `.csv` | Auto-detects delimiter and encoding |
+| Excel | `.xlsx` | Reads first sheet |
+
+**Column Types Detected:**
+- **Numerical** — integers, floats
+- **Categorical** — text or <20 unique values
+- **Datetime** — date formats or date-related names
+- **Boolean** — True/False, Yes/No, 0/1
+- **Identifier** — IDs, codes, keys
+
+## API Reference
+
+### `analyze(filepath, dashboard=True, report=True)`
+
+Runs the complete analysis pipeline.
+
+**Parameters:**
+- `filepath` (str): Path to CSV or Excel file
+- `dashboard` (bool): Generate dashboard (default: True)
+- `report` (bool): Generate report (default: True)
+
+**Returns:** `LazyAnalystResult` object
+
+### Result Object Methods
+
+| Method | Description |
+|--------|-------------|
+| `dashboard()` | Opens interactive dashboard in browser |
+| `report()` | Opens HTML report in browser |
+| `cleaned_data()` | Returns cleaned pandas DataFrame |
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `FileNotFoundError` | Check file path; use absolute path if needed |
+| `ValueError: unsupported file type` | Ensure file is `.csv` or `.xlsx` |
+| Dashboard won't open | Install plotly/dash; open `dashboard.html` directly |
+| Slow analysis | Filter to relevant columns/rows before analysis |
+
+## Development
+
+### Run Tests
+```bash
+pip install pytest
+pytest tests/ -v
+```
+
+### Contribute
+```bash
+git clone https://github.com/Tenali-Rama/lazyanalyst.git
+cd lazyanalyst
+pip install -e .
+pip install -r requirements-dev.txt
+```
+
+## License
+
+MIT License — See [LICENSE](LICENSE) file for details.
+
+---
+
+**Transform your data analysis workflow with one line of code.**
+
+For detailed examples and advanced usage, see the [Examples](#examples) section below.
+
+## Examples
+
+### Sales Analysis
+```python
+import lazyanalyst as la
+
+result = la.analyze("sales.csv")
+result.dashboard()
+```
+*Finds:* Top regions, revenue trends, product performance, correlations
+
+### Customer Analytics
+```python
+result = la.analyze("customers.csv")
+result.report()
+```
+*Finds:* Segment characteristics, churn factors, purchase patterns
+
+### Scientific Data
+```python
+result = la.analyze("experiment_results.csv")
+result.dashboard()
+```
+*Finds:* Measurement distributions, statistical significance, outliers
+
+### Financial Analysis
+```python
+result = la.analyze("financial_data.csv")
+result.report()
+```
+*Finds:* Revenue trends, profit margins, cost correlations, anomalies
