@@ -34,7 +34,7 @@ class LazyAnalystResult:
         return self._cleaned_df
 
 
-def analyze(filepath, dashboard=True, report=True):
+def analyze(filepath, build_dashboard=True, build_report=True):
     """runs full analysis pipeline"""
     
     # make sure outputs folder exists
@@ -147,9 +147,9 @@ def analyze(filepath, dashboard=True, report=True):
         print(f"[LazyAnalyst] Warning: insights generation failed — {e}. Skipping this step.")
         all_results["insights"] = []
     
-    # Module 10 - Dashboard - FIXED: check dashboard parameter
+    # Module 10 - Dashboard - FIXED: use build_dashboard parameter
     dashboard_path = None
-    if dashboard:
+    if build_dashboard:
         print("\n[LazyAnalyst] Step 10/11 — Building dashboard...")
         dashboard_input = {
             "cleaned_df": all_results["cleaned_df"],
@@ -168,9 +168,9 @@ def analyze(filepath, dashboard=True, report=True):
     else:
         print("\n[LazyAnalyst] Step 10/11 — Skipping dashboard (disabled)...")
     
-    # Module 11 - Reporter - FIXED: check report parameter
+    # Module 11 - Reporter - FIXED: use build_report parameter
     report_path = None
-    if report:
+    if build_report:
         print("\n[LazyAnalyst] Step 11/11 — Generating HTML report...")
         report_input = {
             "cleaned_df": all_results["cleaned_df"],
